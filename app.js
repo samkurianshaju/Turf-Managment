@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/user-routes');
+const bookingRouter = require('./routes/booking-routes');
 const cors = require('cors');
 const app = express();
 
@@ -8,6 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use("/users",router)   //localhost:5000/users
+app.use("/booking",bookingRouter) 
 
 mongoose
 .connect(

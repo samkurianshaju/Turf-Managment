@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const Schema =  mongoose.Schema;
 
-const userSchema = new Schema({
+const bookingSchema = new Schema({
    name:{
       type: String,
       required: true
@@ -14,17 +14,7 @@ const userSchema = new Schema({
    gender: {
       type: String,
       required: true
-   },
-   phone: {
-      type: String,
-      required: true
-   },
-   password: {
-      type: String,
-      required: true
-   },
+   }
 })
 
-module.exports = mongoose.model("User", userSchema);
-
-//Turf
+module.exports = mongoose.model("Booking", bookingSchema);
