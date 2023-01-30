@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bookrouter = require('./routes/booking-routes');
 const router = require('./routes/user-routes');
 /*const bookingRouter = require('./routes/booking-routes');
 const cors = require('cors');*/
@@ -14,7 +15,8 @@ app.use("/booking",bookingRouter); */
   res.send("Hello World");
 })*/
 
-app.use("/api/user", router) 
+app.use("/api/user", router);
+app.use("/api/book", bookrouter); 
 mongoose
 .connect(
    "mongodb+srv://admin:87654321@cluster0.joqyn5s.mongodb.net/turfManagment?retryWrites=true&w=majority"

@@ -44,13 +44,13 @@ const signup = async(req,res,next) => {
       .json({message:"User Already Exist"});
    } 
    const hashedPassword = bcrypt.hashSync(password);
-
    const user = new User({
       name,
       age,
       email,
       phone,
       password:hashedPassword,
+      bookings:[],
    });
    try{ 
       await user.save();
