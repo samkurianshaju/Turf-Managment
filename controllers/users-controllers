@@ -1,54 +1,86 @@
+const bcrypt = require("bcryptjs");
 const User = require("../model/User");
 
 const getAllUser = async(req,res,next) =>{
    let users;
    try{
-      users = await User.find();
+      users = await User.find(); //await is used for waiting
    }catch(err){
       console.log(err);
+      throw err;
    }
    if(!users){
       return res.status(400).json({message:"No records found"})
    }
    return res.status(200).json({users});
 }
-
+/*
 const getById = async(req,res,next) =>{
    const id = req.params.id; //colllect id from url
    let user;
    try{
       user = await User.findById(id);
    }catch (err){
-      console.log.apply(err)
+      console.log.apply(err);
+      throw err;
    }
    if(!user){
       return res.status(400).json({message:"User not found"})
    } 
    return res.status(200).json({ user });
 }
-
-const addUser = async(req,res,next) =>{
-   const {name,age,gender,phone,password} = req.body
-   let user;
+*/
+const signup = async(req,res,next) => {
+   const {name,age,email,phone,password} = req.body
+   let exisitingUser;
    try   
    {
-      user = new User({
-         name,
-         age,
-         gender,
-         phone,
-         password
-      });
-      await user.save();
+      exisitingUser = await User.findOne({email})
    } catch (err) {
+      return console.log(err);
+   }
+   if(exisitingUser){
+      return res.status(400)
+      .json({message:"User Already Exist"});
+   } 
+   const hashedPassword = bcrypt.hashSync(password);
+
+   const user = new User({
+      name,
+      age,
+      email,
+      phone,
+      password:hashedPassword,
+   });
+   try{ 
+      await user.save();
+   }catch(err){
       console.log(err);
    }
-   if(!user){
-      return res.status(500).json({message:"Unable to add"})
-   } 
    return res.status(201).json({user});
 }
 
+const login = async(req,res,next) =>
+{
+   const {email,password} = req.body   
+   let exisitingUser;
+   try   
+   {
+      exisitingUser = await User.findOne({email})
+   } catch (err) {
+      return console.log(err);
+   }
+   if(!exisitingUser){
+      return res.status(404)
+      .json({message:"User not found !"});
+   } 
+   const isPasswordCorrect = bcrypt.compareSync(password,exisitingUser.password);
+   if(!isPasswordCorrect){
+      return res.status(400).json({message:"Incorrect Password"});
+   }
+   return res.status(200).json({message:"Login successfull !"});
+}
+/*
 const updateUser = async(req,res,next) =>
 {
    const id = req.params.id; 
@@ -66,7 +98,8 @@ const updateUser = async(req,res,next) =>
 
          user = await user.save();
       }catch (err){
-      console.log.apply(err)
+      console.log.apply(err);
+      throw err;
    }
    if(!user){
       return res.status(404).json({message:"Unable to update by this Id"}); 
@@ -91,6 +124,7 @@ const deleteUser = async(req,res,next) =>
 
 exports.deleteUser = deleteUser;
 exports.updateUser = updateUser;
-exports.getById = getById;
-exports.addUser = addUser;
+exports.getById = getById;*/
+exports.signup = signup;
 exports.getAllUser = getAllUser;
+exports.login = login;

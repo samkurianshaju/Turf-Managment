@@ -11,7 +11,7 @@ const userSchema = new Schema({
       type: Number,
       required: true
    },
-   gender: {
+   email: {
       type: String,
       required: true
    },
@@ -23,8 +23,8 @@ const userSchema = new Schema({
       type: String,
       required: true
    },
-})
+});
 
 module.exports = mongoose.model("User", userSchema);
 
-//Turf
+//User

@@ -5,5 +5,4 @@ const bookingController = require("../controllers/booking-controllers");
 
 router.post("/",bookingController.addBooking);
 
-
 module.exports = router;
