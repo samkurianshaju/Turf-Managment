@@ -2,10 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bookrouter = require('./routes/booking-routes');
 const router = require('./routes/user-routes');
+const cors = require('cors')
 /*const bookingRouter = require('./routes/booking-routes');
-const cors = require('cors');*/
+const cors = require('cors')*/
 const app = express();
-
+app.use(cors())
 //middleware
 app.use(express.json());
 /*app.use(cors());
