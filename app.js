@@ -3,14 +3,13 @@ const mongoose = require('mongoose');
 const bookrouter = require('./routes/booking-routes');
 const router = require('./routes/user-routes');
 const cors = require('cors')
-/*const bookingRouter = require('./routes/booking-routes');
-const cors = require('cors')*/
 const app = express();
-app.use(cors())
+
+
 //middleware
+app.use(cors())
 app.use(express.json());
-/*app.use(cors());
-app.use("/users",router);   //localhost:5000/users
+/*app.use("/users",router);   //localhost:5000/users
 app.use("/booking",bookingRouter); */
 /*app.use("/api",(req,res,next)=>{
   res.send("Hello World");
