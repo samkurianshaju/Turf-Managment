@@ -5,7 +5,7 @@ const User = require("../model/User");
 const getAllBookings = async(req,res,next) =>{
    let bookings;
    try{
-   bookings = await Booking.find();
+   bookings = await Booking.find().populate('user');
    }catch(err){
       return console.log(err);
    }
