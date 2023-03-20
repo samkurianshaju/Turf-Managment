@@ -1,17 +1,18 @@
-const express= require("express");
-const { login } = require("../controllers/users-controllers");
-const { signup } = require("../controllers/users-controllers");
-const { getAllUser } = require("../controllers/users-controllers");
-//const User = require("../model/User");
+const express = require("express");
+const {
+  signup,
+  login,
+  getUser,
+  deleteUser,
+} = require("../controllers/users-controllers.js");
+
+const { verify } = require("../middlewares/jwt");
+
 const router = express.Router();
 
-
-router.get("/",getAllUser);
-router.post("/signup",signup);
-router.post("/login",login);
-
-/*router.get("/:id",usersController.getById);
-router.put("/:id",usersController.updateUser);
-router.delete("/:id",usersController.deleteUser);*/
+router.post("/signup", signup);
+router.post("/login", login);
+router.get("/user", verify, getUser);
+router.delete("/user", verify, deleteUser);
 
 module.exports = router;
