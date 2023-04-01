@@ -13,11 +13,11 @@ app.use("/", userRouter);
 app.use("/", bookingRouter);
 // app.use("/admin", adminRouter);
 mongoose
-  .connect(
-    "mongodb+srv://admin:87654321@cluster0.joqyn5s.mongodb.net/turfManagment?retryWrites=true&w=majority"
+  .connect( 
+    "mongodb+srv://admin:bwRxey00wmoPccNb@cluster0.joqyn5s.mongodb.net/turfManagment?retryWrites=true&w=majority"
   )
   .then(() => app.listen(5000))
   .then(() => console.log("Connected to database"))
   .catch((err) => console.log(err));
 
-//fFsoWqMWkh3xxs3P
+//fFsoWqMWkh3xxs3P!!
