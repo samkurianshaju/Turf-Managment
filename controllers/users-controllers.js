@@ -142,9 +142,29 @@ const deleteUser = async (req, res, next) => {
   return res.status(201).json({ message: "User Deleted Successfully" });
 };
 
+const updateUser = async (req, res, next) => {
+  const { name,age,phone,email } = req.body;
+  const userid = req.params.id;
+  let user;
+  try {
+    user = await user.findByIdAndUpdate(userid, {
+      name,
+      age,
+      phone,
+      email,
+    });
+  } catch (err) {
+    return console.log(err);
+  }
+  if (!user) {
+    return res.status(500).json({ message: "Unable to update" });
+  }
+  return res.status(200).json({ user });
+};
 module.exports = {
   signup,
   login,
   getUser,
   deleteUser,
+  updateUser,
 };
