@@ -143,23 +143,22 @@ const deleteUser = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-  const { name,age,phone,email } = req.body;
-  const userid = req.params.id;
-  let user;
+  const { name, age, phone, email,password } = req.body;
+  const userId = req.params.id;
   try {
-    user = await user.findByIdAndUpdate(userid, {
-      name,
-      age,
-      phone,
-      email,
-    });
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { name, age, phone, email, password },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json({ user });
   } catch (err) {
-    return console.log(err);
+    console.error(err);
+    return res.status(500).json({ message: "Unable to update user" });
   }
-  if (!user) {
-    return res.status(500).json({ message: "Unable to update" });
-  }
-  return res.status(200).json({ user });
 };
 module.exports = {
   signup,
