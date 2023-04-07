@@ -6,6 +6,7 @@ const {
   getById,
   deleteBooking,
   getUserBookings,
+  getUserBookingsByDate,
 } = require("../controllers/booking-controllers");
 const { verify } = require("../middlewares/jwt");
 const Booking = require("../model/Booking");
@@ -14,10 +15,10 @@ const bookrouter = express.Router();
 
 bookrouter.get("/bookings", getAllBookings);
 bookrouter.post("/add", verify, addBooking);
-bookrouter.put("/update/:id", updateBooking);
-bookrouter.get("/:id", getById);
-bookrouter.delete("/:id", deleteBooking);
+bookrouter.put("/update/:id", verify, updateBooking);
+bookrouter.get("/:id", verify, getById);
+bookrouter.delete("/:id", verify, deleteBooking);
 bookrouter.get("/user/bookings", verify, getUserBookings);
-// router.post("/", addBooking);
+bookrouter.get("/user/bookings/:date", verify, getUserBookingsByDate);
 
 module.exports = bookrouter;

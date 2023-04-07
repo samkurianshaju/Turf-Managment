@@ -141,7 +141,6 @@ const deleteUser = async (req, res, next) => {
   }
   return res.status(201).json({ message: "User Deleted Successfully" });
 };
-
 const updateUser = async (req, res, next) => {
   const { name,age,phone,email } = req.body;
   const userid = req.params.id;
@@ -166,5 +165,5 @@ module.exports = {
   login,
   getUser,
   deleteUser,
-  updateUser,
+  updateUser
 };
