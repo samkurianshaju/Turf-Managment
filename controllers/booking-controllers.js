@@ -119,10 +119,8 @@ const getUserBookingsByDate = async (req, res, next) => {
   const evening = date + "T23:59:59.000Z";
   const email = req.user.email;
   let userBookings;
-  try {
-    const user = await User.findOne({ email });
+    try {
     userBookings = await Booking.find({
-      user: user._id,
       bookingDate: {
         $gte: new Date(morning),
         $lt: new Date(evening),
