@@ -142,23 +142,24 @@ const deleteUser = async (req, res, next) => {
   return res.status(201).json({ message: "User Deleted Successfully" });
 };
 const updateUser = async (req, res, next) => {
-  const { name,age,phone,email } = req.body;
-  const userid = req.params.id;
-  let user;
+  const { name, age, phone } = req.body;
+  const email = req.user.email;
   try {
-    user = await user.findByIdAndUpdate(userid, {
-      name,
-      age,
-      phone,
-      email,
-    });
+    const user = await User.findOne({email});
+    const userId = user._id;
+    const updateduser = await User.findByIdAndUpdate(
+      userId,
+      { name, age, phone},
+      { new: true }
+    );
+    if (!updateduser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(200).json({ updateduser });
   } catch (err) {
-    return console.log(err);
+    console.error(err);
+    return res.status(500).json({ message: "Unable to update user" });
   }
-  if (!user) {
-    return res.status(500).json({ message: "Unable to update" });
-  }
-  return res.status(200).json({ user });
 };
 module.exports = {
   signup,
