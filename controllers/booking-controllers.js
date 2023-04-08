@@ -52,14 +52,13 @@ const addBooking = async (req, res, next) => {
 };
 
 const updateBooking = async (req, res, next) => {
-  const { bookingDate, start_time, end_time } = req.body;
+  const { bookingDate, slot } = req.body;
   const bookingid = req.params.id;
   let booking;
   try {
     booking = await Booking.findByIdAndUpdate(bookingid, {
       bookingDate,
-      start_time,
-      end_time,
+      slot,
     });
   } catch (err) {
     return console.log(err);
@@ -119,7 +118,7 @@ const getUserBookingsByDate = async (req, res, next) => {
   const evening = date + "T23:59:59.000Z";
   const email = req.user.email;
   let userBookings;
-    try {
+  try {
     userBookings = await Booking.find({
       bookingDate: {
         $gte: new Date(morning),
