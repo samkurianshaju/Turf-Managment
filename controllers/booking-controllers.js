@@ -93,7 +93,7 @@ const deleteBooking = async (req, res, next) => {
     return console.log(err);
   }
   if (!booking) {
-    return res.ststus(500).json({ message: "Unable to delete" });
+    return res.status(500).json({ message: "Unable to delete" });
   }
   return res.status(200).json({ message: "Booking deleted successfully" });
 };
