@@ -24,8 +24,10 @@ const userSchema = new Schema({
       required: true
    },
    bookings:[{type:mongoose.Types.ObjectId,ref:"Booking",required:true}],
+   isAdmin: {
+      type: Boolean,
+      default: false
+   }
 });
 
 module.exports = mongoose.model("User", userSchema);
-
-//User
