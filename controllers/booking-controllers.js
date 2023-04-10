@@ -133,6 +133,7 @@ const getUserBookingsByDate = async (req, res, next) => {
   }
   return res.status(200).json({ bookings: userBookings });
 };
+
 module.exports = {
   getUserBookings,
   addBooking,

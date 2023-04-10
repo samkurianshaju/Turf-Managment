@@ -28,6 +28,7 @@ const getUser = async (req, res, next) => {
   }
   return res.status(200).json({ user });
 };
+
 /*
 const getById = async(req,res,next) =>{
    const id = req.params.id; //colllect id from url
@@ -45,7 +46,7 @@ const getById = async(req,res,next) =>{
 }
 */
 const signup = async (req, res, next) => {
-  const { name, age, email, phone, password } = req.body;
+  const { name, age, email, phone, password, isAdmin } = req.body;
   let exisitingUser;
   try {
     exisitingUser = await User.findOne({ email });
@@ -63,6 +64,7 @@ const signup = async (req, res, next) => {
     phone,
     password: hashedPassword,
     bookings: [],
+    isAdmin,
   });
   try {
     await user.save();
@@ -113,11 +115,11 @@ const updateUser = async (req, res, next) => {
   const { name, age, phone } = req.body;
   const email = req.user.email;
   try {
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     const userId = user._id;
     const updateduser = await User.findByIdAndUpdate(
       userId,
-      { name, age, phone},
+      { name, age, phone },
       { new: true }
     );
     if (!updateduser) {
@@ -134,12 +136,12 @@ const updatePassword = async (req, res, next) => {
   const { password } = req.body;
   const email = req.user.email;
   try {
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
     const userId = user._id;
     const hashedPassword = bcrypt.hashSync(password);
     const updatedPassword = await User.findByIdAndUpdate(
       userId,
-      { password: hashedPassword},
+      { password: hashedPassword },
       { new: true }
     );
     if (!updatedPassword) {
@@ -158,4 +160,5 @@ module.exports = {
   deleteUser,
   updateUser,
   updatePassword,
+  getAllUser,
 };

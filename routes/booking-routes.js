@@ -20,5 +20,6 @@ bookrouter.get("/:id", verify, getById);
 bookrouter.delete("/:id", verify, deleteBooking);
 bookrouter.get("/user/bookings", verify, getUserBookings);
 bookrouter.get("/user/bookings/:date", verify, getUserBookingsByDate);
+bookrouter.get("/user/bookings/all", verify, getUserBookings);
 
 module.exports = bookrouter;
